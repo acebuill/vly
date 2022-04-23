@@ -88,7 +88,6 @@ def disable_repository(repo_name: str, pacman_config_path="/etc/pacman.conf"):
     log(f"disabling {repo_name}")
     delete_repository_line(repo_name, pacman_config_path)
     log_ok(f"disabled {repo_name}")
-    return True
 
 
 def set_number_of_parallel_downloads(n: int):
