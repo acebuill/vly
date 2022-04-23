@@ -79,16 +79,15 @@ def execute_group_action(arguments: dict):
         return pacman.uninstall_packages(group["packages"], True)
 
 
-def execute_repository_action(arguments) -> bool:
+def execute_repository_action(arguments):
     if arguments["enable"]:
         pacmanconfig.enable_repository(
-            arguments["<mirror_name>"], "/home/void/insc/src/tmp/pacman.conf"
+            arguments["<mirror_name>"]
         )
         return True
     pacmanconfig.disable_repository(
-        arguments["<mirror_name>"], "/home/void/insc/src/tmp/pacman.conf"
+        arguments["<mirror_name>"]
     )
-    return True
 
 
 def execute_action(arguments: dict) -> bool:
@@ -96,6 +95,8 @@ def execute_action(arguments: dict) -> bool:
         execute_group_action(arguments)
     if arguments["<mirror_name>"] != None:
         execute_repository_action(arguments)
+    if arguments["<number_of_parallel_downloads>"] != None:
+        pacmanconfig.set_number_of_parallel_downloads(arguments["<number_of_parallel_downloads>"])
 
 
 def main():
