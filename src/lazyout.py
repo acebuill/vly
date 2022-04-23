@@ -9,10 +9,12 @@ def includes_pattern(string: str, pattern):
 
 
 def handle_error_output(input_: str):
-    if re.compile(".*error:.*").search(input_):
+    error_rgx = re.compile(".*error:.*")
+    if error_rgx.search(input_):
         print("\r", end="")
-        print(self.error_rgx.findall(input_)[0])
-        self.finished = True
+        print(error_rgx.findall(input_)[0])
+        return True
+    return False
 
 
 def get_action_match(input_: str):
@@ -54,9 +56,10 @@ class VlyPacmanLog:
 
     def write(self, input_: str):
         handle_start_procedure_output(input_)
-        handle_error_output(input_)
         handle_action_output(input_)
         handle_progress_output(input_)
+        if handle_error_output(input_):
+            self.__del__()
         if at_post_transaction(input_):
             self.__del__()
 
